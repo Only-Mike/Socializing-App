@@ -63,7 +63,6 @@ dare_challenges = [
     {"question": "Try to see if you can score the person to your right - use physical touch and body language only.", "category": "Physical Touch"},
     {"question": "Make up a dance and dance with a person of your choice - but with the OPPOSITE gender (if possible).", "category": "Physical Touch"},
 
-
     #Imitation challenges
     {"question": "Imitate a celebrity of your choice.", "category": "Imitation"},
     {"question": "Imitate a family member of your choice.", "category": "Imitation"},
