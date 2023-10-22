@@ -96,7 +96,7 @@ dare_challenges = [
 # Lists to keep track of used challenges and players
 used_truth_challenges = []
 used_dare_challenges = []
-player_names = []
+player_data = []
 
 # Initialize session_state if it hasn't been initialized
 if 'player_data' not in st.session_state:
@@ -134,6 +134,10 @@ def get_unique_random_challenge(player_name):
 
 
 def main():
+    # Initialize session_state if it hasn't been initialized
+    if 'player_data' not in st.session_state:
+        st.session_state['player_data'] = {}
+
     st.title("Truth or Dare Generator")
 
     # All categories
@@ -144,33 +148,33 @@ def main():
     if new_player:
         excluded_categories_for_new_player = st.multiselect("Select categories to exclude for this player", all_categories)
         if st.button("Add Player"):
-            st.session_state.player_data[new_player] = {'excluded_categories': excluded_categories_for_new_player}
+            st.session_state['player_data'][new_player] = {'excluded_categories': excluded_categories_for_new_player}
             st.success(f"Added {new_player}")
 
     # Delete players
-    if st.session_state.player_data:
-        player_to_delete = st.selectbox("Select a player to delete", list(st.session_state.player_data.keys()))
+    if st.session_state['player_data']:
+        player_to_delete = st.selectbox("Select a player to delete", list(st.session_state['player_data'].keys()))
         if st.button("Delete Player"):
-            del st.session_state.player_data[player_to_delete]
+            del st.session_state['player_data'][player_to_delete]
             st.success(f"Deleted {player_to_delete}")
 
     # Show list of added players
-    if st.session_state.player_data:
+    if st.session_state['player_data']:
         st.write("List of Players:")
-        for player in st.session_state.player_data.keys():
+        for player in st.session_state['player_data'].keys():
             st.write(player)
 
     # Generate Truth or Dare
-    if st.session_state.player_data:
+    if st.session_state['player_data']:
         if st.button("Generate Truth or Dare"):
-            selected_player = random.choice(list(st.session_state.player_data.keys()))
+            selected_player = random.choice(list(st.session_state['player_data'].keys()))
             challenge = get_unique_random_challenge(selected_player)
             st.write(f"{selected_player}, {challenge}")
 
     # Display excluded categories for each player in the sidebar
-    if st.session_state.player_data:
+    if st.session_state['player_data']:
         st.sidebar.title("Excluded Categories for Each Player:")
-        for player, data in st.session_state.player_data.items():
+        for player, data in st.session_state['player_data'].items():
             st.sidebar.write(f"{player}: {', '.join(data['excluded_categories']) if data['excluded_categories'] else 'None'}")
 
 # Run the app
